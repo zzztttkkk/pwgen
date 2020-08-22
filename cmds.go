@@ -141,4 +141,5 @@ func cmdGen() {
 		log.Println("failed to access clipboard, use `-p` to print password")
 		return
 	}
+	log.Println("the password in your clipboard now")
 }

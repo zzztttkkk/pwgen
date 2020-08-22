@@ -20,7 +20,7 @@ func fixSecretKey() {
 	}
 
 	if len(SECRET_KEY) < 1 {
-		log.Println("warn: empty SECRET_KEY")
+		SECRET_KEY = _GetFileSecret(false)
 	}
 
 	if len([]byte(SECRET_KEY)) > 32 {

@@ -13,9 +13,23 @@ import (
 
 func _GetSecret(isRepeat bool) string {
 	if !isRepeat {
-		fmt.Println("Enter Your Secret:")
+		fmt.Println("Enter Your Account Secret:")
 	} else {
-		fmt.Println("Enter Your Secret Again:")
+		fmt.Println("Enter Your Account Secret Again:")
+	}
+	pwd, err := terminal.ReadPassword(int(syscall.Stdin))
+	if err != nil {
+		fmt.Println()
+		log.Fatalf("%s; please see: https://github.com/golang/go/issues/11914#issuecomment-613715787\n", err)
+	}
+	return string(pwd)
+}
+
+func _GetFileSecret(isRepeat bool) string {
+	if !isRepeat {
+		fmt.Println("Enter Your File Secret:")
+	} else {
+		fmt.Println("Enter Your File Secret Again:")
 	}
 	pwd, err := terminal.ReadPassword(int(syscall.Stdin))
 	if err != nil {
@@ -102,9 +116,6 @@ func main() {
         -p : do not send to the clipboard, only print. 
         -s : auto save this account.
         -d : auto save this account as the default.
-
-    clean
-        remove the 
 `,
 		)
 	}
