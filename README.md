@@ -1,6 +1,6 @@
 # pwgen
 
-**you must change '[SECRET_KEY]()', then recompile.**
+**you must change '[SECRET_KEY](https://github.com/zzztttkkk/pwgen/blob/master/secret.go#L4)', then recompile.**
 
 # help
 
