@@ -1,4 +1,4 @@
-# pwgen [中文]()
+# pwgen [中文](https://github.com/zzztttkkk/pwgen/blob/master/README_CN.md)
 - **you must change '[SECRET_KEY](https://github.com/zzztttkkk/pwgen/blob/master/secret.go#L4)', then recompile**
 - **the '[SECRET_KEY](https://github.com/zzztttkkk/pwgen/blob/master/secret.go#L4)' does not participate in the generation of the password and is only used to encrypt files**
 - **for more security, you can set the '[SECRET_KEY](https://github.com/zzztttkkk/pwgen/blob/master/secret.go#L4)' to empty, so you will be asked every time**
