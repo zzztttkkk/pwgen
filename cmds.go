@@ -135,6 +135,7 @@ func cmdGen() {
 	pwd := generate(hostname, username, key, *lPtr)
 	if *dpPtr {
 		fmt.Println(pwd)
+		return
 	}
 	err = clipboard.WriteAll(pwd)
 	if err != nil {
