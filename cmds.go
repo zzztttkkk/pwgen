@@ -142,7 +142,6 @@ func cmdGen() {
 		}
 	}
 
-	fmt.Println(hostname, username, key, *lPtr)
 	pwd := generate(hostname, username, key, *lPtr)
 	if *dpPtr {
 		fmt.Println(pwd)
