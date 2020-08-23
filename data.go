@@ -11,6 +11,7 @@ import (
 type Data struct {
 	Default  string
 	Accounts map[string]string
+	Lengths  map[string]int
 }
 
 func load() *Data {
@@ -21,7 +22,7 @@ func load() *Data {
 	f, err := os.Open(filepath.Join(dir, ".pwgen"))
 	if err != nil {
 		if os.IsNotExist(err) {
-			return &Data{Accounts: map[string]string{}}
+			return &Data{Accounts: map[string]string{}, Lengths: map[string]int{}}
 		}
 		log.Fatalln(err)
 	}
@@ -37,7 +38,7 @@ func load() *Data {
 		log.Fatalln(err)
 	}
 
-	m := &Data{}
+	m := &Data{Accounts: map[string]string{}, Lengths: map[string]int{}}
 	err = json.Unmarshal(v, &m)
 	if err != nil {
 		log.Fatalln(err)
@@ -72,7 +73,8 @@ func save(m *Data) {
 }
 
 func getKey(name string) string {
-	accounts := load().Accounts
+	data := load()
+	accounts := data.Accounts
 	if len(accounts) > 0 {
 		return accounts[name]
 	}
@@ -88,9 +90,21 @@ func setKey(name, secret string, isDefault bool) {
 	save(m)
 }
 
+func setLength(hostname string, l int) {
+	m := load()
+	m.Lengths[hostname] = l
+	save(m)
+}
+
+func getLength(hostname string) int {
+	m := load()
+	return m.Lengths[hostname]
+}
+
 func delKey(name string) {
 	m := load()
 	delete(m.Accounts, name)
+	delete(m.Lengths, name)
 	if m.Default == name {
 		m.Default = ""
 	}

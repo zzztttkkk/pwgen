@@ -87,7 +87,7 @@ func noOptBefore(ind int) bool {
 
 func cmdGen() {
 	var set = flag.NewFlagSet("gen", flag.ExitOnError)
-	var lPtr = set.Int("l", 0, "password length(in range 1-64)")
+	var lengthPtr = set.Int("l", 0, "password length(in range 1-64)")
 	var dpPtr = set.Bool("p", false, "print password")
 	var unPtr = set.String("u", "", "username")
 	var hnPtr = set.String("h", "", "hostname")
@@ -142,7 +142,13 @@ func cmdGen() {
 		}
 	}
 
-	pwd := generate(hostname, username, key, *lPtr)
+	l := *lengthPtr
+	if l == 0 {
+		l = getLength(hostname)
+	} else {
+		setLength(hostname, l)
+	}
+	pwd := generate(hostname, username, key, l)
 	if *dpPtr {
 		fmt.Println(pwd)
 		return
