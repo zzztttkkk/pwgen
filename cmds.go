@@ -25,7 +25,7 @@ func cmdAdd() {
 	}
 
 	var username string
-	if len(os.Args) >= 3 { // pwgen add username ...
+	if len(os.Args) >= 3 && noOptBefore(2) { // pwgen add username ...
 		username = os.Args[2]
 	}
 	if len(username) < 1 || username[0] == '-' {
@@ -48,7 +48,7 @@ func cmdDel() {
 	var unPtr = set.String("u", "", "username")
 
 	var username string
-	if len(os.Args) >= 3 { // pwgen del username ...
+	if len(os.Args) >= 3 && noOptBefore(2) { // pwgen del username ...
 		username = os.Args[2]
 	}
 	if len(username) < 1 || username[0] == '-' {
@@ -75,6 +75,16 @@ func cmdLs() {
 	}
 }
 
+func noOptBefore(ind int) bool {
+	for i := 0; i <= ind; i++ {
+		v := os.Args[i]
+		if v[0] == '-' {
+			return false
+		}
+	}
+	return true
+}
+
 func cmdGen() {
 	var set = flag.NewFlagSet("gen", flag.ExitOnError)
 	var lPtr = set.Int("l", 0, "password length(in range 1-64)")
@@ -96,7 +106,7 @@ func cmdGen() {
 	}
 
 	var hostname string
-	if len(os.Args) >= 3 { // pwgen gen hostname ...
+	if len(os.Args) >= 3 && noOptBefore(2) { // pwgen gen hostname ...
 		hostname = os.Args[2]
 	}
 	if len(hostname) < 1 || hostname[0] == '-' {
@@ -107,7 +117,7 @@ func cmdGen() {
 	}
 
 	var username string
-	if len(os.Args) >= 4 { // pwgen gen hostname username ...
+	if len(os.Args) >= 4 && noOptBefore(3) { // pwgen gen hostname username ...
 		username = os.Args[3]
 	}
 	if len(username) < 1 || username[0] == '-' {
@@ -132,6 +142,7 @@ func cmdGen() {
 		}
 	}
 
+	fmt.Println(hostname, username, key, *lPtr)
 	pwd := generate(hostname, username, key, *lPtr)
 	if *dpPtr {
 		fmt.Println(pwd)

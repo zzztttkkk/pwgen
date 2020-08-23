@@ -49,7 +49,11 @@ func _GetUsername(useData bool) string {
 
 	fmt.Println("Enter Username:")
 	reader := bufio.NewReader(os.Stdin)
-	name, _, _ := reader.ReadLine()
+	name, _, err := reader.ReadLine()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	name = bytes.TrimSpace(name)
 	if len(name) < 1 {
 		log.Fatalln("empty username")
@@ -72,20 +76,20 @@ func main() {
 	fixSecretKey()
 	time.Sleep(time.Millisecond)
 
-	var SubCmd string
-
 	if len(os.Args) < 2 {
-		SubCmd = "gen"
+		os.Args = append(os.Args, "gen")
 	} else {
 		sub := os.Args[1]
 		if sub[0] == '-' {
-			SubCmd = "gen"
-		} else {
-			SubCmd = sub
+			var v = make([]string, len(os.Args)-1, len(os.Args)-1)
+			copy(v, os.Args[1:])
+			os.Args = os.Args[:1]
+			os.Args = append(os.Args, "gen")
+			os.Args = append(os.Args, v...)
 		}
 	}
 
-	switch SubCmd {
+	switch os.Args[1] {
 	case "gen":
 		cmdGen()
 	case "add":
