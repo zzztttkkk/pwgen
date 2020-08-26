@@ -11,11 +11,11 @@ import (
 	"time"
 )
 
-func _GetSecret(isRepeat bool) string {
+func _ReadFromTerminal(name string, isRepeat bool) string {
 	if !isRepeat {
-		fmt.Println("Enter Your Account Secret:")
+		fmt.Printf("Enter Your %s:\n", name)
 	} else {
-		fmt.Println("Enter Your Account Secret Again:")
+		fmt.Printf("Enter Your %s Again:\n", name)
 	}
 	pwd, err := terminal.ReadPassword(int(syscall.Stdin))
 	if err != nil {
@@ -25,18 +25,12 @@ func _GetSecret(isRepeat bool) string {
 	return string(pwd)
 }
 
-func _GetFileSecret(isRepeat bool) string {
-	if !isRepeat {
-		fmt.Println("Enter Your File Secret:")
-	} else {
-		fmt.Println("Enter Your File Secret Again:")
-	}
-	pwd, err := terminal.ReadPassword(int(syscall.Stdin))
-	if err != nil {
-		fmt.Println()
-		log.Fatalf("%s; please see: https://github.com/golang/go/issues/11914#issuecomment-613715787\n", err)
-	}
-	return string(pwd)
+func _GetAccountSecret(isRepeat bool) string {
+	return _ReadFromTerminal("Account Secret", isRepeat)
+}
+
+func _GetAppSecret(isRepeat bool) string {
+	return _ReadFromTerminal("Application Secret", isRepeat)
 }
 
 func _GetUsername(useData bool) string {

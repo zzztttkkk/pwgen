@@ -20,7 +20,7 @@ func fixSecretKey() {
 	}
 
 	if len(SECRET_KEY) < 1 {
-		SECRET_KEY = _GetFileSecret(false)
+		SECRET_KEY = _GetAppSecret(false)
 	}
 
 	if len([]byte(SECRET_KEY)) > 32 {

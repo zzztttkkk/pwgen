@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/atotto/clipboard"
 	"log"
 	"os"
-	"pwgen/clipboard"
 )
 
 func cmdAdd() {
@@ -35,8 +35,8 @@ func cmdAdd() {
 		}
 	}
 
-	s1 := _GetSecret(false)
-	s2 := _GetSecret(true)
+	s1 := _GetAccountSecret(false)
+	s2 := _GetAccountSecret(true)
 	if s1 != s2 {
 		log.Fatalln("the two secret keys are inconsistent")
 	}
@@ -130,15 +130,15 @@ func cmdGen() {
 	key := getKey(username)
 	if len(key) < 1 {
 		if *autoSavePtr {
-			s1 := _GetSecret(false)
-			s2 := _GetSecret(true)
+			s1 := _GetAccountSecret(false)
+			s2 := _GetAccountSecret(true)
 			if s1 != s2 {
 				log.Fatalln("the two secret keys are inconsistent")
 			}
 			setKey(username, s1, *isDefaultPtr)
 			key = s1
 		} else {
-			key = _GetSecret(false)
+			key = _GetAccountSecret(false)
 		}
 	}
 
@@ -158,5 +158,5 @@ func cmdGen() {
 		log.Println("failed to access clipboard, use `-p` to print password")
 		return
 	}
-	log.Println("the password in your clipboard now")
+	log.Println("the password is now on your clipboard")
 }
