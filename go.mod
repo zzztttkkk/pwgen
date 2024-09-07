@@ -1,4 +1,4 @@
-module pwgen
+module github.com/zzztttkkk/pwgen
 
 go 1.14
 
